@@ -1,0 +1,1 @@
+Use the coding style outlined in the [.NET Foundation Coding Guidelines](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md).
