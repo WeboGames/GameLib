@@ -1,0 +1,11 @@
+# cake
+tools/*
+build.ps1
+
+# build
+*bin/
+*obj/
+*packages/
+
+# ide
+.idea

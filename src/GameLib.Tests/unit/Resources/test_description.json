@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Id" : 0,
+    "Name" : "name_00",
+    "Description" : "description_00",
+    "SomeString" : "string_00"
+  },
+  {
+    "Id" : 1,
+    "Name" : "name_01",
+    "Description" : "description_01",
+    "SomeString" : "string_01"
+  },
+  {
+    "Id" : 2,
+    "Name" : "name_02",
+    "Description" : "description_02",
+    "SomeString" : "string_02"
+  }
+]
