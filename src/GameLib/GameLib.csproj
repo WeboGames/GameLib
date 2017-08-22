@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inventory\IInventory.cs" />
+    <Compile Include="Inventory\IItemBundle.cs" />
+    <Compile Include="Inventory\Inventory.cs" />
+    <Compile Include="Inventory\Item.cs" />
+    <Compile Include="Inventory\ItemBundle.cs" />
     <Compile Include="Persistence\IPersistence.cs" />
     <Compile Include="Persistence\ISaveFile.cs" />
     <Compile Include="Persistence\Persistence.cs" />
