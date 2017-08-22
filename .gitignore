@@ -1,6 +1,5 @@
 # cake
 tools/*
-build.ps1
 
 # build
 *bin/
