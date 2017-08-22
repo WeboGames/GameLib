@@ -8,8 +8,7 @@ It currently provides the following features:
 
 - Save File Management.
 - Text Resource Management.
-
-The next feature to come is Inventory management.
+- Inventory Management.
 
 ## Dependencies
 

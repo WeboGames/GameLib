@@ -1,17 +1,20 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>GameLib</id>
     <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <title>GameLib</title>
+    <authors>Moises Jimenez</authors>
+    <owners>Moises Jimenez</owners>
     <licenseUrl>https://raw.githubusercontent.com/WeboGames/GameLib/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WeboGames/GameLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <description>First release of GameLib Nuget Package.</description>
+    <releaseNotes>Added possibility of handling inventories, savefiles and text resources.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>game-development</tags>
   </metadata>
+  <files>
+    <file src="bin\GameLib.???" target="lib\net35" />
+  </files>
 </package>

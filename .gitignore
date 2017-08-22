@@ -5,6 +5,7 @@ tools/*
 *bin/
 *obj/
 *packages/
+*images/
 
 # ide
 .idea

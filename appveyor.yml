@@ -1,2 +1,8 @@
 build_script: 
   - ps: .\build.ps1
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: /SKKaKr5wafFFmLtH2xPCG5fyY4+d/1zxIjOeMBNQ9u9bt95TiHWDq8Xt8523tbo
+  skip_symbols: true

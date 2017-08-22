@@ -57,11 +57,66 @@ Task("Run-Unit-Tests")
 });
 
 //////////////////////////////////////////////////////////////////////
+// PACKAGE
+//////////////////////////////////////////////////////////////////////
+
+var RootFiles = new FilePath[]
+{
+    "LICENSE",
+    "README.md"
+};
+
+var FilesToPackage = new FilePath[]
+{
+    "GameLib.dll",
+    "Newtonsoft.Json.dll",
+    "Newtonsoft.Json.xml"
+};
+
+Task("CreateImage")
+    .IsDependentOn("Run-Unit-Tests")
+    .Description("Copies files")
+    .Does(() =>
+    {
+        var dir = "./src/GameLib/images/";
+        var binDir = dir + "bin/";
+        var sourceDir = "./src/GameLib/bin/Debug/";
+
+        CleanDirectory(dir);
+        CopyFiles(RootFiles, dir);
+        CreateDirectory(binDir);
+        Information("Created directory " + binDir);
+
+        foreach (FilePath file in FilesToPackage) {
+            var sourcePath = sourceDir + file;
+            if (FileExists(sourcePath)) {
+                CopyFileToDirectory(sourcePath, binDir);
+            }
+        }
+    });
+
+Task("Package")
+    .Description("Creates NuGet package")
+    .IsDependentOn("CreateImage")
+    .Does(() =>
+    {
+        var dir = "./src/GameLib/images/";
+        var packageDir = "./src/GameLib/packages/";
+        CreateDirectory(packageDir);
+        NuGetPack("./nuget/GameLib.nuspec", new NuGetPackSettings()
+        {
+            Version = "1.0",
+            BasePath = dir,
+            OutputDirectory = packageDir
+        });
+    });
+
+//////////////////////////////////////////////////////////////////////
 // TASK TARGETS
 //////////////////////////////////////////////////////////////////////
 
 Task("Default")
-    .IsDependentOn("Run-Unit-Tests");
+    .IsDependentOn("Package");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
