@@ -1,6 +1,9 @@
 build_script: 
   - ps: .\build.ps1
 
+artifacts:
+  - path: '**\GameLib*.nupkg' 
+
 deploy:
   provider: NuGet
   api_key:
