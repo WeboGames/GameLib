@@ -13,6 +13,9 @@
     <releaseNotes>Added possibility of handling inventories, savefiles and text resources.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>game-development</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="[9.0.1]" />
+    </dependencies>
   </metadata>
   <files>
     <file src="bin\GameLib.???" target="lib\net35" />
