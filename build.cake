@@ -105,7 +105,7 @@ Task("Package")
         CreateDirectory(packageDir);
         NuGetPack("./nuget/GameLib.nuspec", new NuGetPackSettings()
         {
-            Version = "1.0.2",
+            Version = "1.0.3",
             BasePath = dir,
             OutputDirectory = packageDir
         });
