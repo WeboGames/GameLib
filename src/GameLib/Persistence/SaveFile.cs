@@ -4,7 +4,7 @@ namespace GameLib.Persistence {
         private readonly string _worldName;
         private readonly string _playerName;
 
-        private string _savefileLocation = "Saves/";
+        private static string _savefileLocation = "Saves/";
         private const string SavefileExtension = ".dat";
 
         /// <summary>
@@ -18,9 +18,22 @@ namespace GameLib.Persistence {
             _playerName = _savefileLocation + name + "_player" + SavefileExtension;
         }
 
-        public void SetSavefileLocation(string savefileLocation)
+        /// <summary>
+        /// Change the savefile location from the defaults Saves/ directory.
+        /// </summary>
+        /// <param name="savefileLocation">New save file location.</param>
+        public static void SetSavefileLocation(string savefileLocation)
         {
             _savefileLocation = savefileLocation;
+        }
+
+        /// <summary>
+        /// Get currently configured save file location. Default is "Saves/".
+        /// </summary>
+        /// <returns>Save file location.</returns>
+        public static string GetSavefileLocation()
+        {
+            return _savefileLocation;
         }
 
         public string GetName()

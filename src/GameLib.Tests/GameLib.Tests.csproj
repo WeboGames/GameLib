@@ -46,14 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="unit\Resources\Description.cs" />
+    <Compile Include="unit\Persistence\PersistenceTest.cs" />
+    <Compile Include="unit\Resources\ItemExtended.cs" />
     <Compile Include="unit\Resources\SerializableTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="unit\Resources\test_description.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="unit\Persistence" />
+    <Content Include="unit\Resources\extended_item_description.json" />
+    <Content Include="unit\Resources\item_description.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

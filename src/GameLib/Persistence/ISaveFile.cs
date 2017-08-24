@@ -20,11 +20,5 @@
         /// </summary>
         /// <returns>Name.</returns>
         string GetPlayerName();
-
-        /// <summary>
-        /// Change the savefile location from the defaults Saves/ directory.
-        /// </summary>
-        /// <param name="savefileLocation">New save file location.</param>
-        void SetSavefileLocation(string savefileLocation);
     }
 }

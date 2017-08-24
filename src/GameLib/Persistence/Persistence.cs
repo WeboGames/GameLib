@@ -17,8 +17,8 @@ namespace GameLib.Persistence {
         public void Save<T>(List<T> dataToSave, string fileName)
         {
             lock (_lock) {
-                if (!Directory.Exists("Saves")) {
-                    Directory.CreateDirectory("Saves");
+                if (!Directory.Exists(SaveFile.GetSavefileLocation())) {
+                    Directory.CreateDirectory(SaveFile.GetSavefileLocation());
                 }
                 var binaryFormatter = new BinaryFormatter();
                 var saveFile = File.Open(fileName, FileMode.Create);
@@ -31,8 +31,9 @@ namespace GameLib.Persistence {
         {
             lock (_lock) {
                 var binaryFormatter = new BinaryFormatter();
-                var saveFile= File.OpenRead(fileName);
+                var saveFile = File.OpenRead(fileName);
                 var list = (List<T>) binaryFormatter.Deserialize(saveFile);
+                saveFile.Close();
                 return list;
             }
         }

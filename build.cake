@@ -80,7 +80,7 @@ Task("CreateImage")
     {
         var dir = "./src/GameLib/images/";
         var binDir = dir + "bin/";
-        var sourceDir = "./src/GameLib/bin/Debug/";
+        var sourceDir = "./src/GameLib/bin/Release/";
 
         CleanDirectory(dir);
         CopyFiles(RootFiles, dir);
@@ -105,7 +105,7 @@ Task("Package")
         CreateDirectory(packageDir);
         NuGetPack("./nuget/GameLib.nuspec", new NuGetPackSettings()
         {
-            Version = "1.0.3",
+            Version = "1.0.4",
             BasePath = dir,
             OutputDirectory = packageDir
         });
