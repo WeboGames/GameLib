@@ -68,19 +68,6 @@ namespace GameLib.Resources {
         }
 
         /// <summary>
-        /// Loads a single object description from resources.
-        /// </summary>
-        /// <param name="jsonString">Location of the description.</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>Description.</returns>
-        public static T LoadDescription<T>(string jsonString) where T : new()
-        {
-            return jsonString.Length != 0
-                ? new T()
-                : JsonConvert.DeserializeObject<T>(jsonString);
-        }
-
-        /// <summary>
         /// Loads descriptions from resources as long as they can be wrapped by a GenericListWrapper.
         /// </summary>
         /// <param name="jsonString">Location of the descriptions.</param>
