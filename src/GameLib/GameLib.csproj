@@ -54,7 +54,6 @@
     <Compile Include="Persistence\PersistenceFactory.cs" />
     <Compile Include="Persistence\SaveFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ItemSerializable.cs" />
     <Compile Include="Resources\Serializable.cs" />
   </ItemGroup>
   <ItemGroup>
