@@ -4,21 +4,15 @@
     /// </summary>
     public interface ISaveFile {
         /// <summary>
+        /// Get associated players savefile name.
+        /// </summary>
+        /// <returns>Name.</returns>
+        string GetFullPath();
+        
+        /// <summary>
         /// Get save file name.
         /// </summary>
         /// <returns>Name.</returns>
         string GetName();
-
-        /// <summary>
-        /// Get associated world savefile name.
-        /// </summary>
-        /// <returns>name</returns>
-        string GetWorldName();
-
-        /// <summary>
-        /// Get associated players savefile name.
-        /// </summary>
-        /// <returns>Name.</returns>
-        string GetPlayerName();
     }
 }

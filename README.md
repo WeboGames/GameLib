@@ -14,9 +14,9 @@ It currently provides the following features:
 
 The dependencies in the project currently are:
 
-- NUnit v3.5*.
-- Json.NET v9.0*.
-- CakeBuild.
+- [NUnit](http://nunit.org/) v3.5*.
+- [Json.NET](https://www.newtonsoft.com/json) v9.0*.
+- [CakeBuild](https://cakebuild.net/).
 
 \*: Kept at older versions due to Unity3D using .NET 3.5.
 
@@ -28,7 +28,11 @@ GameLib is currently available through the NuGet package manager and can be inst
 
 ### Building GameLib From Scratch (Windows)
 
-GameLib is a [CakeBuild](https://cakebuild.net/) project. Running the provided build.ps1 script should be enough. After which you can add a reference to it in your project.
+GameLib is a CakeBuild project. Running the provided build.ps1 script should be enough. After which you can add a reference to it in your project.
+
+## Using GameLib
+
+Please refer to the [wiki](https://github.com/WeboGames/GameLib/wiki) for explanations on how to use the different modules available in GameLib.
 
 ### Using with Unity3D
 

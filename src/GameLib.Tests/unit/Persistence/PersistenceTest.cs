@@ -1,30 +1,79 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using GameLib.Inventory;
 using GameLib.Persistence;
 using NUnit.Framework;
 
 namespace GameLib.Tests.unit.Persistence {
     [TestFixture]
     public class PersistenceTest {
-        
-        [Test]
-        public void TestSaveFile()
+        private IPersistence _persistence;
+        private List<TestData> _dataToSave;
+
+        [SetUp]
+        public void Setup()
         {
-            var persistence = PersistenceFactory.CreatePersistance();
-            var dataToSave = new List<Item>();
+            _dataToSave = new List<TestData>();
             for (var i = 0; i < 10; i++) {
-                dataToSave.Add(new Item(i, "name_" + i, i * 10, i, (Item.ItemRarity) (i % 4),
-                    i * 5.0f,
-                    "description_" + i, (Item.OwnershipType) (i % 3), i % 2 == 0));
+                _dataToSave.Add(new TestData(i, i + 0.5f, i.ToString()));
             }
+            SaveFile.SetSavefileExtension("dat");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Directory.Delete(SaveFile.GetSavefileLocation(), true);
+        }
+
+        [Test]
+        public void TestSaving()
+        {
+            _persistence = PersistenceFactory.CreatePersistance();
             var saveFile = new SaveFile("test");
-            persistence.Save(dataToSave, saveFile.GetWorldName());
-            Assert.True(File.Exists(saveFile.GetWorldName()));
-            var loadedData = persistence.Load<Item>(saveFile.GetWorldName());
-            Assert.That(10, Is.EqualTo(loadedData.Count));
-            Assert.True(persistence.SaveFilesAvailable());
-            File.Delete(saveFile.GetWorldName());
+            _persistence.Save(_dataToSave, saveFile.GetFullPath());
+            Assert.True(File.Exists(saveFile.GetFullPath()));
+            var loadedData = _persistence.Load<TestData>(saveFile.GetFullPath());
+            Assert.That(loadedData.Count, Is.EqualTo(10));
+            Assert.True(_persistence.SaveFilesAvailable());
+        }
+
+        [Test]
+        public void TestCustomExtension()
+        {
+            SaveFile.SetSavefileExtension("test");
+            _persistence = PersistenceFactory.CreatePersistance();
+            var saveFiles = new List<SaveFile>();
+            for (var i = 0; i < 10; i++) {
+                saveFiles.Add(new SaveFile("save_" + i));
+            }
+            foreach (var saveFile in saveFiles) {
+                _persistence.Save(_dataToSave, saveFile.GetFullPath());
+            }
+            var loadedFiles = _persistence.GetSaveFiles();
+            Assert.That(loadedFiles.Count, Is.EqualTo(10));
+        }
+
+        [Test]
+        public void TestExclusion()
+        {
+            var saveFiles = new List<SaveFile>();
+            for (var i = 0; i < 10; i++) {
+                saveFiles.Add(new SaveFile("save_" + i));
+            }
+            foreach (var saveFile in saveFiles) {
+                _persistence.Save(_dataToSave, saveFile.GetFullPath());
+            }
+            saveFiles.Clear();
+            SaveFile.SetSavefileExtension("test");
+            _persistence = PersistenceFactory.CreatePersistance();
+            for (var i = 0; i < 10; i++) {
+                saveFiles.Add(new SaveFile("save_" + i));
+            }
+            foreach (var saveFile in saveFiles) {
+                _persistence.Save(_dataToSave, saveFile.GetFullPath());
+            }
+            var loadedFiles = _persistence.GetSaveFiles();
+            Assert.That(loadedFiles.Count, Is.EqualTo(10));
         }
     }
 }

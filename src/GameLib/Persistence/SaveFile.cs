@@ -1,11 +1,10 @@
 namespace GameLib.Persistence {
-    public class SaveFile : ISaveFile{
+    public class SaveFile : ISaveFile {
         private readonly string _name;
-        private readonly string _worldName;
-        private readonly string _playerName;
+        private readonly string _fullPath;
 
         private static string _savefileLocation = "Saves/";
-        private const string SavefileExtension = ".dat";
+        private static string _savefileExtension = "dat";
 
         /// <summary>
         /// Instantiate a savefile object.
@@ -14,26 +13,12 @@ namespace GameLib.Persistence {
         public SaveFile(string name)
         {
             _name = name;
-            _worldName = _savefileLocation + name + "_world" +  SavefileExtension;
-            _playerName = _savefileLocation + name + "_player" + SavefileExtension;
+            _fullPath = _savefileLocation + _name + "." + _savefileExtension;
         }
 
-        /// <summary>
-        /// Change the savefile location from the defaults Saves/ directory.
-        /// </summary>
-        /// <param name="savefileLocation">New save file location.</param>
-        public static void SetSavefileLocation(string savefileLocation)
+        public string GetFullPath()
         {
-            _savefileLocation = savefileLocation;
-        }
-
-        /// <summary>
-        /// Get currently configured save file location. Default is "Saves/".
-        /// </summary>
-        /// <returns>Save file location.</returns>
-        public static string GetSavefileLocation()
-        {
-            return _savefileLocation;
+            return _fullPath;
         }
 
         public string GetName()
@@ -41,14 +26,45 @@ namespace GameLib.Persistence {
             return _name;
         }
 
-        public string GetWorldName()
+        /// <summary>
+        /// Get the currently configured savefile extension.
+        /// </summary>
+        /// <returns>Extension without . (dot).</returns>
+        public static string GetSavefileExtension()
         {
-            return _worldName;
+            return _savefileExtension;
         }
 
-        public string GetPlayerName()
+        /// <summary>
+        /// Get the currently configured savefile location.
+        /// </summary>
+        /// <returns>Location with / (slash).</returns>
+        public static string GetSavefileLocation()
         {
-            return _playerName;
+            return _savefileLocation;
+        }
+
+        /// <summary>
+        /// Set a new savefile extension.
+        /// </summary>
+        /// <param name="savefileExtension">New extension.</param>
+        public static void SetSavefileExtension(string savefileExtension)
+        {
+            _savefileExtension = savefileExtension.StartsWith(".")
+                ? savefileExtension.Substring(1)
+                : savefileExtension;
+        }
+
+        /// <summary>
+        /// Set a new savefile location.
+        /// </summary>
+        /// <param name="savefileLocation">New location.</param>
+        public static void SetSavefileLocation(string savefileLocation)
+        {
+            _savefileLocation = savefileLocation;
+            if (!_savefileLocation.EndsWith("/")) {
+                _savefileLocation += "/";
+            }
         }
 
         public override bool Equals(object obj)

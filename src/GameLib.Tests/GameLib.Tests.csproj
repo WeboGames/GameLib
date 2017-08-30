@@ -49,6 +49,7 @@
     <Compile Include="unit\Inventory\InventoryTest.cs" />
     <Compile Include="unit\Inventory\ItemBundleTest.cs" />
     <Compile Include="unit\Persistence\PersistenceTest.cs" />
+    <Compile Include="unit\Persistence\TestData.cs" />
     <Compile Include="unit\Resources\ItemExtended.cs" />
     <Compile Include="unit\Resources\SerializableTest.cs" />
   </ItemGroup>

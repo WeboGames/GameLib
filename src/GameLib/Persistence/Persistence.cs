@@ -11,7 +11,7 @@ namespace GameLib.Persistence {
 
         public Persistence()
         {
-            _saveFileRegex = new Regex("(_world\\.dat|_player\\.dat)$");
+            _saveFileRegex = new Regex("\\." + SaveFile.GetSavefileExtension() + "$");
         }
 
         public void Save<T>(List<T> dataToSave, string fileName)
@@ -40,14 +40,16 @@ namespace GameLib.Persistence {
 
         public List<SaveFile> GetSaveFiles()
         {
-            var saveFiles = Directory.GetFiles("Saves");
+            var saveFiles = Directory.GetFiles(SaveFile.GetSavefileLocation());
             saveFiles.OrderBy(s => s).ToList();
             if (saveFiles.Length == 0) return null;
             var saveFileNames = new List<SaveFile>();
             foreach (var fileName in saveFiles) {
+                if (!_saveFileRegex.IsMatch(fileName)) continue;
                 var saveFileName = _saveFileRegex.Split(fileName);
                 if (string.IsNullOrEmpty(saveFileName[0])) continue;
-                var saveFile = new SaveFile(saveFileName[0].Substring(6));
+                var saveFile =
+                    new SaveFile(saveFileName[0].Substring(SaveFile.GetSavefileLocation().Length));
                 if (!saveFileNames.Contains(saveFile)) {
                     saveFileNames.Add(saveFile);
                 }
@@ -57,7 +59,7 @@ namespace GameLib.Persistence {
 
         public bool SaveFilesAvailable()
         {
-            var saveFiles = Directory.GetFiles("Saves");
+            var saveFiles = Directory.GetFiles(SaveFile.GetSavefileLocation());
             // TODO: verify if the files found really conform to format.
             return saveFiles.Length != 0;
         }
