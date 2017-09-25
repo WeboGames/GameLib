@@ -1,0 +1,11 @@
+﻿{
+    "Id": 0,
+    "Name": "name_00",
+    "Description": "description_00",
+    "Price": 100,
+    "MaxBundleSize": 10,
+    "Weight": 10.0,
+    "Stackable": true,
+    "Rarity": 0,
+    "Ownership": 0
+}

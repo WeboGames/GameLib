@@ -21,7 +21,7 @@ namespace GameLib.Resources {
         /// <summary>
         /// Object description.
         /// </summary>
-        public string Description; 
+        public string Description;
 
         /// <summary>
         /// Returns a copy of the given object.
@@ -40,15 +40,28 @@ namespace GameLib.Resources {
         }
 
         /// <summary>
-        /// Loads descriptions from resources as long as they can be wrapped by a GenericListWrapper.
+        /// Loads descriptions from resources as long as they can be serialized.
         /// </summary>
-        /// <param name="jsonString">Location of the descriptions.</param>
+        /// <param name="jsonString">Json String to parse.</param>
         /// <returns>List with descriptions.</returns>
-        public static List<T> LoadDescriptions<T>(string jsonString) where T : Serializable
+        public static List<T> LoadDescriptions<T>(string jsonString) where T : new()
         {
-            return jsonString.Length == 0 
+            return jsonString.Length == 0
                 ? new List<T>()
                 : JsonConvert.DeserializeObject<List<T>>(jsonString);
+        }
+
+        /// <summary>
+        /// Loads a single object description from resources.
+        /// </summary>
+        /// <param name="jsonString">Json String to parse.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Description.</returns>
+        public static T LoadDescription<T>(string jsonString) where T : new()
+        {
+            return jsonString.Length == 0
+                ? new T()
+                : JsonConvert.DeserializeObject<T>(jsonString);
         }
     }
 }

@@ -54,7 +54,9 @@
     <Compile Include="unit\Resources\SerializableTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="unit\Resources\extended_item.json" />
     <Content Include="unit\Resources\extended_item_description.json" />
+    <Content Include="unit\Resources\item.json" />
     <Content Include="unit\Resources\item_description.json" />
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/WeboGames/GameLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>First release of GameLib Nuget Package.</description>
-    <releaseNotes>Added possibility of handling inventories, savefiles and text resources.</releaseNotes>
+    <releaseNotes>Removed restriction of inheritance from Serializable when using LoadDescriptions and reinstated LoadDescription.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>game-development</tags>
     <dependencies>

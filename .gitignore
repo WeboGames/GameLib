@@ -9,3 +9,4 @@ tools/*
 
 # ide
 .idea
+src/.vs/

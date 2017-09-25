@@ -11,6 +11,8 @@ namespace GameLib.Inventory {
         public ItemRarity Rarity;
         public OwnershipType Ownership;
 
+        public Item() { }
+
         public Item(int id, string name, int price, int maxBundleSize,
             ItemRarity rarity, float weight, string description,
             OwnershipType ownership, bool stackable)
