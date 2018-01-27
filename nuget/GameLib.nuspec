@@ -9,7 +9,7 @@
     <licenseUrl>https://raw.githubusercontent.com/WeboGames/GameLib/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WeboGames/GameLib</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>First release of GameLib Nuget Package.</description>
+    <description>Library providing basic gaming related functionality such as inventory management and crafting.</description>
     <releaseNotes>Removed restriction of inheritance from Serializable when using LoadDescriptions and reinstated LoadDescription.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>game-development</tags>
