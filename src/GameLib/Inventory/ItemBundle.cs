@@ -60,7 +60,7 @@ namespace GameLib.Inventory {
             return result;
         }
 
-        public int AddBundleToBundle(ItemBundle bundle)
+        public int AddBundleToBundle(IItemBundle bundle)
         {
             var itemsToAdd = 0;
             if (!CanBeAddedToBundle(bundle)) return itemsToAdd;
@@ -81,7 +81,7 @@ namespace GameLib.Inventory {
             return Id == item.Id && _bundle.Count < MaxBundleSize || Id == NotSet;
         }
 
-        public bool CanBeAddedToBundle(ItemBundle itemBundle)
+        public bool CanBeAddedToBundle(IItemBundle itemBundle)
         {
             return Id == itemBundle.Id && _bundle.Count <= MaxBundleSize || Id == NotSet;
         }
@@ -97,7 +97,7 @@ namespace GameLib.Inventory {
             return true;
         }
 
-        private void SetBundle(ItemBundle itemBundle)
+        private void SetBundle(IItemBundle itemBundle)
         {
             Id = itemBundle.Id;
             MaxBundleSize = itemBundle.MaxBundleSize;

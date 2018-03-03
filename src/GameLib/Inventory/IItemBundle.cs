@@ -40,7 +40,7 @@ namespace GameLib.Inventory {
         /// </summary>
         /// <param name="bundle">Bundle from which to move the items.</param>
         /// <returns>Number of items actually moved.</returns>
-        int AddBundleToBundle(ItemBundle bundle);
+        int AddBundleToBundle(IItemBundle bundle);
 
         /// <summary>
         /// Checks whether an item can be added to the bundle.
@@ -54,7 +54,7 @@ namespace GameLib.Inventory {
         /// </summary>
         /// <param name="itemBundle">Bundle from which to move the items.</param>
         /// <returns>Whether they can be added.</returns>
-        bool CanBeAddedToBundle(ItemBundle itemBundle);
+        bool CanBeAddedToBundle(IItemBundle itemBundle);
 
         /// <summary>
         /// Resets bundle object

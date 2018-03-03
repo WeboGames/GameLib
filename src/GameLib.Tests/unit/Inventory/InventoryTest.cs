@@ -29,7 +29,7 @@ public class InventoryTest {
         var ironOre = Serializable.Clone(_item0);
         _inventory.AddItem(ironOre);
         Assert.AreEqual(ironOre.Weight, _inventory.Usage);
-        Assert.AreEqual(2, _inventory.GetBundleNumber());
+        Assert.AreEqual(1, _inventory.GetBundleNumber());
     }
 
     [Test]
@@ -131,5 +131,26 @@ public class InventoryTest {
         _inventory.AddItem(item1);
         var foundItem = _inventory.RemoveItem(item);
         Assert.IsNull(foundItem);
+    }
+
+    [Test]
+    public void T10_GetAllMatchingBundles()
+    {
+        _inventory = new Inventory(500f, 10);
+        for (var i = 0; i < _item0.MaxBundleSize + 2; i++) {
+            _inventory.AddItem(Serializable.Clone(_item0));
+        }
+        Assert.AreEqual(_item0.Weight * (_item0.MaxBundleSize + 2), _inventory.Usage);
+        var oldUsage = _inventory.Usage;
+        Assert.AreEqual(2, _inventory.GetBundleNumber());
+        var foundLists = _inventory.GetItemBundles(_item0);
+        Assert.AreEqual(2, foundLists.Count);
+        for (var i = 0; i < _item1.MaxBundleSize * 2 + 1; i++) {
+            _inventory.AddItem(Serializable.Clone(_item1));
+        }
+        var foundLists1 = _inventory.GetItemBundles(_item1);
+        Assert.AreEqual(oldUsage + _item1.Weight * (_item1.MaxBundleSize * 2 + 1), _inventory.Usage);
+        Assert.AreEqual(5, _inventory.GetBundleNumber());
+        Assert.AreEqual(3, foundLists1.Count);
     }
 }

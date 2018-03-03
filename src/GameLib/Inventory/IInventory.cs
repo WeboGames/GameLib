@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace GameLib.Inventory {
     /// <summary>
     /// The inventory interface handles the behavior of the inventory implementation related to
@@ -24,7 +26,7 @@ namespace GameLib.Inventory {
         /// </summary>
         /// <param name="item">desired item object to add</param>
         /// <returns>1 if added, 0 if not</returns>
-        ItemBundle AddItem(Item item);
+        IItemBundle AddItem(Item item);
 
         /// <summary>
         /// Add a number of a given item to a specific bundle in an inventory.
@@ -33,7 +35,7 @@ namespace GameLib.Inventory {
         /// <param name="item">Item to add.</param>
         /// <param name="count">Number of items to add.</param>
         /// <returns>Modified bundle.</returns>
-        ItemBundle AddItem(int bundlePosition, Item item, int count);
+        IItemBundle AddItem(int bundlePosition, Item item, int count);
 
         /// <summary>
         ///  Add an item to a specific bundle
@@ -41,7 +43,7 @@ namespace GameLib.Inventory {
         /// <param name="itemBundle">Item bundle to add</param>
         /// <param name="bundlePosition">Position of the bundle to add to</param>
         /// <returns>Number of items added</returns>
-        int AddBundleToBundle(ItemBundle itemBundle, int bundlePosition);
+        int AddBundleToBundle(IItemBundle itemBundle, int bundlePosition);
 
         /// <summary>
         /// Get number of bundles in inventory
@@ -54,7 +56,7 @@ namespace GameLib.Inventory {
         /// </summary>
         /// <param name="bundlePosition">Index of bundle to retrieve</param>
         /// <returns>Bundle</returns>
-        ItemBundle GetItemBundle(int bundlePosition);
+        IItemBundle GetItemBundle(int bundlePosition);
 
         /// <summary>
         /// Looks for an Item within the inventory.
@@ -68,21 +70,28 @@ namespace GameLib.Inventory {
         /// </summary>
         /// <param name="item">Item for which to get a bundle</param>
         /// <returns>Item bundle for given item</returns>
-        ItemBundle GetItemBundle(Item item);
+        IItemBundle GetItemBundle(Item item);
+
+        /// <summary>
+        /// Finds a list of bundles containing the desired item.
+        /// </summary>
+        /// <param name="item">Item to search for.</param>
+        /// <returns>List of found bundles.</returns>
+        List<IItemBundle> GetItemBundles(Item item);
 
         /// <summary>
         /// Retrieves an Item from a bundle.
         /// </summary>
         /// <param name="targetBundle">Bundle from which to retrieve an item.</param>
         /// <returns>Item from bundle</returns>
-        Item RemoveItem(ItemBundle targetBundle);
+        Item RemoveItem(IItemBundle targetBundle);
 
         /// <summary>
         /// Finds the position of a given bundle in the inventory.
         /// </summary>
         /// <param name="targetBundle">Bundle to look for</param>
         /// <returns>Position if found, -1 if not</returns>
-        int GetBundlePosition(ItemBundle targetBundle);
+        int GetBundlePosition(IItemBundle targetBundle);
 
         /// <summary>
         /// Removes items from a given bundle

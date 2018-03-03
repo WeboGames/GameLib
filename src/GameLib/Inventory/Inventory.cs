@@ -7,20 +7,20 @@ namespace GameLib.Inventory {
         public int BundleCapacity { get; set; }
         public float Usage { get; set; }
 
-        public List<ItemBundle> ItemBundles;
+        public List<IItemBundle> ItemBundles;
 
         public Inventory(float weightCapacity, int bundleCapacity)
         {
             WeightCapacity = weightCapacity;
             BundleCapacity = bundleCapacity;
             Usage = 0;
-            ItemBundles = new List<ItemBundle>(bundleCapacity);
+            ItemBundles = new List<IItemBundle>(bundleCapacity);
             for (var i = 0; i < BundleCapacity; i++) {
                 ItemBundles.Add(new ItemBundle());
             }
         }
 
-        public ItemBundle AddItem(Item item)
+        public IItemBundle AddItem(Item item)
         {
             if (!(Usage + item.Weight <= WeightCapacity)) return null;
             var bundle = HasAvailableBundle(item);
@@ -38,7 +38,7 @@ namespace GameLib.Inventory {
             return bundle;
         }
 
-        public ItemBundle AddItem(int bundlePosition, Item item, int count)
+        public IItemBundle AddItem(int bundlePosition, Item item, int count)
         {
             if (Usage + item.Weight > WeightCapacity) return null;
             var bundle = ItemBundles[bundlePosition];
@@ -50,17 +50,17 @@ namespace GameLib.Inventory {
             return bundle;
         }
 
-        public int AddBundleToBundle(ItemBundle itemBundle, int bundlePosition)
+        public int AddBundleToBundle(IItemBundle itemBundle, int bundlePosition)
         {
             return ItemBundles[bundlePosition].AddBundleToBundle(itemBundle);
         }
 
         public int GetBundleNumber()
         {
-            return ItemBundles.Count;
+            return ItemBundles.Count(x => x.Id != ItemBundle.NotSet);
         }
 
-        public ItemBundle GetItemBundle(int bundlePosition)
+        public IItemBundle GetItemBundle(int bundlePosition)
         {
             return ItemBundles[bundlePosition];
         }
@@ -76,12 +76,17 @@ namespace GameLib.Inventory {
             return null;
         }
 
-        public ItemBundle GetItemBundle(Item item)
+        public IItemBundle GetItemBundle(Item item)
         {
             return ItemBundles.FirstOrDefault(itemBundle => itemBundle.Id == item.Id);
         }
 
-        public Item RemoveItem(ItemBundle targetBundle)
+        public List<IItemBundle> GetItemBundles(Item item)
+        {
+            return ItemBundles.Where(ib => ib.Id == item.Id).ToList();
+        }
+
+        public Item RemoveItem(IItemBundle targetBundle)
         {
             foreach (var itemBundle in ItemBundles) {
                 if (itemBundle != targetBundle) continue;
@@ -92,7 +97,7 @@ namespace GameLib.Inventory {
             return null;
         }
 
-        public int GetBundlePosition(ItemBundle targetBundle)
+        public int GetBundlePosition(IItemBundle targetBundle)
         {
             var result = -1;
             for (var i = 0; i < ItemBundles.Count; i++) {
@@ -111,11 +116,11 @@ namespace GameLib.Inventory {
             return removedItems;
         }
 
-        private ItemBundle HasAvailableBundle(Item item)
+        private IItemBundle HasAvailableBundle(Item item)
         {
             return item.Stackable
                 ? ItemBundles.FirstOrDefault(t => t.Id == item.Id && t.CanBeAddedToBundle(item) ||
-                                                   t.Id == ItemBundle.NotSet)
+                                                  t.Id == ItemBundle.NotSet)
                 : null;
         }
     }
