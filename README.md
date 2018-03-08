@@ -1,6 +1,9 @@
 # GameLib
 
-[![Build status](https://ci.appveyor.com/api/projects/status/middixk3cpev8eyk/branch/master?svg=true)](https://ci.appveyor.com/project/moisesejimenezg/gamelib/branch/master) [![NuGet Version and Downloads count](https://buildstats.info/nuget/GameLib)](https://www.nuget.org/packages/GameLib)
+| Version | Status | Downloads |
+|---------|--------|-----------|
+| Public | [![Build status](https://ci.appveyor.com/api/projects/status/middixk3cpev8eyk/branch/master?svg=true)](https://ci.appveyor.com/project/moisesejimenezg/gamelib/branch/master) | [![NuGet Version and Downloads count](https://buildstats.info/nuget/GameLib)](https://www.nuget.org/packages/GameLib) |
+
 
 GameLib is a pure C# library intended to speed up game development. Primarily thought as a companion to Unity3D, because it has no dependencies to it GameLib can be used independently of Unity3D.
 
