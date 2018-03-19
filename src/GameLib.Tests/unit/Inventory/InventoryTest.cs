@@ -87,8 +87,8 @@ public class InventoryTest {
         var beacon = Serializable.Clone(_item1);
         _inventory.AddItem(ironOre);
         _inventory.AddItem(beacon);
-        Assert.AreEqual(ironOre.Id, _inventory.GetItemBundle(0).Id);
-        Assert.AreEqual(beacon.Id, _inventory.GetItemBundle(1).Id);
+        Assert.AreEqual(ironOre.Id, _inventory.GetItemBundle(0).Preset.Id);
+        Assert.AreEqual(beacon.Id, _inventory.GetItemBundle(1).Preset.Id);
     }
 
     [Test]

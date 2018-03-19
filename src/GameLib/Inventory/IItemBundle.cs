@@ -1,19 +1,30 @@
-namespace GameLib.Inventory {
-    public interface IItemBundle {
+namespace GameLib.Inventory
+{
+    public interface IItemBundle
+    {
         /// <summary>
-        /// Id of the item to be contained in this bundle.
+        /// Currently configured preset.
         /// </summary>
-        int Id { get; }
+        Item Preset
+        {
+            get;
+        }
 
         /// <summary>
         /// Maximum number of items to be contained in this bundle.
         /// </summary>
-        int MaxBundleSize { get; }
+        int MaxBundleSize
+        {
+            get;
+        }
 
         /// <summary>
         /// Current number of items in bundle.
         /// </summary>
-        int Count { get; }
+        int Count
+        {
+            get;
+        }
 
         /// <summary>
         /// Adds item to bundle

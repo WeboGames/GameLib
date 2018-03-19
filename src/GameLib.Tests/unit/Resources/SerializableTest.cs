@@ -56,5 +56,20 @@ namespace GameLib.Tests.unit.Resources {
             Assert.That(5, Is.EqualTo(descriptionList[1].Slot));
             Assert.IsNull(descriptionList[0].SecretString);
         }
+
+        [Test]
+        public void BlueprintDeserializationTest()
+        {
+            var jsonText =
+                File.ReadAllText(
+                    "./src/GameLib.Tests/unit/Resources/blueprint_description.json");
+            var blueprintList = Serializable.LoadDescriptions<Blueprint>(jsonText);
+            Assert.AreEqual(1, blueprintList.Count);
+            Assert.AreEqual("blueprint_00", blueprintList[0].Name);
+            Assert.AreEqual("description_blueprint_00", blueprintList[0].Description);
+            Assert.AreEqual(3, blueprintList[0].Ingredients.Count);
+            Assert.AreEqual(3, blueprintList[0].Ingredients[1].Item2);
+            Assert.AreEqual(2, blueprintList[0].Product.Item1);
+        }
     }
 }

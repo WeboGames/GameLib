@@ -1,34 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using GameLib.Resources;
 
 namespace GameLib.Inventory
 {
-    public class Blueprint : IBlueprint
+    [Serializable]
+    public class Blueprint : Serializable, IBlueprint
     {
-        private readonly List<IItemBundle> _ingredients;
+        public List<Tuple<int, int>> Ingredients { get; set; }
+
+        public Tuple<int, int> Product
+        {
+            get; set;
+        }
+
+        public Blueprint()
+        {
+            Ingredients = new List<Tuple<int, int>>();
+        }
 
         public Blueprint(List<IItemBundle> ingredients, IItemBundle product)
         {
-            _ingredients = ingredients;
-            Product = product;
+            Ingredients = new List<Tuple<int, int>>();
+            foreach (var bundle in ingredients) {
+                Ingredients.Add(new Tuple<int, int>(bundle.Preset.Id, bundle.Count));
+            }
+            Product = new Tuple<int, int>(product.Preset.Id, product.Count);
         }
 
-        public IItemBundle Product
+        public Blueprint(List<Tuple<int, int>> ingredients, IItemBundle product)
         {
-            get;
+            Ingredients = ingredients;
+            Product = new Tuple<int, int>(product.Preset.Id, product.Count);
         }
 
-        public List<IItemBundle> GetIngredients()
-        {
-            return _ingredients;
-        }
-
-        public bool Match(List<IItemBundle> ingredients)
+        public bool Match(List<Tuple<int, int>> ingredients)
         {
             var found = true;
-            foreach (var ingredient in _ingredients) {
-                var foundIngredient = ingredients.SingleOrDefault(s => s.Count >= ingredient.Count 
-                                                                  && s.Id == ingredient.Id);
+            foreach (var ingredient in Ingredients) {
+                var foundIngredient = ingredients.SingleOrDefault(s => s.Item2 >= ingredient.Item2 
+                                                            && s.Item1 == ingredient.Item1);
                 found = foundIngredient != null ? true : false;
                 if (!found) {
                     break;
@@ -37,7 +49,26 @@ namespace GameLib.Inventory
             return found;
         }
 
-        public IItemBundle Craft(List<IItemBundle> ingredients)
+        public bool Match(List<IItemBundle> ingredients)
+        {
+            var found = true;
+            foreach (var ingredient in Ingredients) {
+                var foundIngredient = ingredients.SingleOrDefault(s => s.Count >= ingredient.Item2 
+                                                            && s.Preset.Id == ingredient.Item1);
+                found = foundIngredient != null ? true : false;
+                if (!found) {
+                    break;
+                }
+            }
+            return found;
+        }
+
+        public Tuple<int, int> Craft(List<Tuple<int, int>> ingredients)
+        {
+            return Match(ingredients) ? Product : null;
+        }
+
+        public Tuple<int, int> Craft(List<IItemBundle> ingredients)
         {
             return Match(ingredients) ? Product : null;
         }

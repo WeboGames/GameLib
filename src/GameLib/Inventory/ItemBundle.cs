@@ -1,60 +1,75 @@
-﻿using System.Collections.Generic;
+﻿using GameLib.Resources;
 
-namespace GameLib.Inventory {
-    public class ItemBundle : IItemBundle {
-        public int Id { get; private set; }
-        public int MaxBundleSize { get; private set; }
+namespace GameLib.Inventory
+{
+    public class ItemBundle : IItemBundle
+    {
+        private Item _preset = null;
+
+        public Item Preset
+        {
+            get {
+                return _preset;
+            }
+        }
 
         public int Count
         {
-            get { return _bundle.Count; }
+            get {
+                return _count;
+            }
         }
 
-        public const int NotSet = -1;
+        public int MaxBundleSize
+        {
+            get; private set;
+        }
 
-        private readonly List<Item> _bundle;
+        public const int c_NOT_SET = -1;
+        private int _count = 0;
 
         public ItemBundle()
         {
-            Id = NotSet;
-            MaxBundleSize = NotSet;
-            _bundle = new List<Item>();
+            _preset = null;
+            MaxBundleSize = c_NOT_SET;
         }
 
         public ItemBundle(Item preset)
         {
-            Id = preset.Id;
+            _preset = preset;
             MaxBundleSize = preset.MaxBundleSize;
-            _bundle = new List<Item>();
         }
 
         public bool AddItemToBundle(Item item)
         {
-            if (!CanBeAddedToBundle(item)) return false;
-            if (Id == NotSet) {
+            if (!CanBeAddedToBundle(item))
+                return false;
+            if (_preset == null) {
                 SetBundle(item);
             }
-            _bundle.Add(item);
+            _count++;
             return true;
         }
 
         public Item RemoveItemFromBundle()
         {
-            if (_bundle.Count <= 0) return null;
-            var tmp = _bundle[0];
-            _bundle.RemoveAt(0);
-            if (_bundle.Count == 0) {
+            if (_count <= 0)
+                return null;
+            _count--;
+            var clone = Serializable.Clone(_preset);
+            if (_count == 0) {
                 Reset();
             }
-            return tmp;
+            return clone;
         }
 
         public int RemoveItemsFromBundle(int itemAmount)
         {
             var result = 0;
             for (var i = 0; i < itemAmount; i++) {
-                if (_bundle.Count <= 0) break;
-                _bundle.RemoveAt(0);
+                if (_count <= 0)
+                    break;
+                _count--;
                 result++;
             }
             return result;
@@ -63,49 +78,51 @@ namespace GameLib.Inventory {
         public int AddBundleToBundle(IItemBundle bundle)
         {
             var itemsToAdd = 0;
-            if (!CanBeAddedToBundle(bundle)) return itemsToAdd;
-            if (Id == NotSet) {
+            if (!CanBeAddedToBundle(bundle))
+                return itemsToAdd;
+            if (_preset == null) {
                 SetBundle(bundle);
             }
-            itemsToAdd = MaxBundleSize - _bundle.Count < bundle.Count
-                ? MaxBundleSize - _bundle.Count
+            itemsToAdd = MaxBundleSize - _count < bundle.Count
+                ? MaxBundleSize - _count
                 : bundle.Count;
             for (var i = 0; i < itemsToAdd; i++) {
-                _bundle.Add(bundle.RemoveItemFromBundle());
+                bundle.RemoveItemFromBundle();
+                _count++;
             }
             return itemsToAdd;
         }
 
         public bool CanBeAddedToBundle(Item item)
         {
-            return Id == item.Id && _bundle.Count < MaxBundleSize || Id == NotSet;
+            return (_preset != null && _preset.Id == item.Id && _count < MaxBundleSize) || _preset == null;
         }
 
         public bool CanBeAddedToBundle(IItemBundle itemBundle)
         {
-            return Id == itemBundle.Id && _bundle.Count <= MaxBundleSize || Id == NotSet;
+            return (_preset != null && _preset.Id == itemBundle.Preset.Id && _count <= MaxBundleSize) || _preset == null;
         }
 
         public bool Reset()
         {
-            if (_bundle.Count > 0) {
+            if (_count > 0) {
                 return false;
             }
-            Id = NotSet;
-            MaxBundleSize = NotSet;
-            _bundle.Clear();
+            _preset = null;
+            MaxBundleSize = c_NOT_SET;
+            _count = 0;
             return true;
         }
 
         private void SetBundle(IItemBundle itemBundle)
         {
-            Id = itemBundle.Id;
+            _preset = Serializable.Clone(itemBundle.Preset);
             MaxBundleSize = itemBundle.MaxBundleSize;
         }
 
         private void SetBundle(Item item)
         {
-            Id = item.Id;
+            _preset = Serializable.Clone(item);
             MaxBundleSize = item.MaxBundleSize;
         }
     }

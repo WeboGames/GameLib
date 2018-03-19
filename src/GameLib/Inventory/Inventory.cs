@@ -28,7 +28,7 @@ namespace GameLib.Inventory {
                 bundle.AddItemToBundle(item);
             } else {
                 if (!item.Stackable) {
-                    bundle = ItemBundles.FirstOrDefault(t => t.Id == ItemBundle.NotSet);
+                    bundle = ItemBundles.FirstOrDefault(t => t.Preset == null);
                     if (bundle != null) {
                         bundle.AddItemToBundle(item);
                     }
@@ -57,7 +57,7 @@ namespace GameLib.Inventory {
 
         public int GetBundleNumber()
         {
-            return ItemBundles.Count(x => x.Id != ItemBundle.NotSet);
+            return ItemBundles.Count(x => x.Preset != null);
         }
 
         public IItemBundle GetItemBundle(int bundlePosition)
@@ -68,7 +68,7 @@ namespace GameLib.Inventory {
         public Item RemoveItem(Item item)
         {
             foreach (var itemBundle in ItemBundles) {
-                if (itemBundle.Id != item.Id) continue;
+                if (itemBundle.Preset == null || itemBundle.Preset.Id != item.Id) continue;
                 var item1 = itemBundle.RemoveItemFromBundle();
                 Usage -= item1.Weight;
                 return item1;
@@ -78,12 +78,12 @@ namespace GameLib.Inventory {
 
         public IItemBundle GetItemBundle(Item item)
         {
-            return ItemBundles.FirstOrDefault(itemBundle => itemBundle.Id == item.Id);
+            return ItemBundles.FirstOrDefault(itemBundle => itemBundle.Preset.Id == item.Id);
         }
 
         public List<IItemBundle> GetItemBundles(Item item)
         {
-            return ItemBundles.Where(ib => ib.Id == item.Id).ToList();
+            return ItemBundles.Where(ib => ib.Preset != null && ib.Preset.Id == item.Id).ToList();
         }
 
         public Item RemoveItem(IItemBundle targetBundle)
@@ -119,8 +119,8 @@ namespace GameLib.Inventory {
         private IItemBundle HasAvailableBundle(Item item)
         {
             return item.Stackable
-                ? ItemBundles.FirstOrDefault(t => t.Id == item.Id && t.CanBeAddedToBundle(item) ||
-                                                  t.Id == ItemBundle.NotSet)
+                ? ItemBundles.FirstOrDefault(t => (t.Preset != null && t.Preset.Id == item.Id && t.CanBeAddedToBundle(item)) ||
+                                                  t.Preset == null)
                 : null;
         }
     }

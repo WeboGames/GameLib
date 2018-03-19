@@ -1,25 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameLib.Inventory
 {
     public interface IBlueprint
     {
-        IItemBundle Product 
+        Tuple<int, int> Product 
         {
-            get;
+            get; set;
         }
 
         /// <summary>
         /// Get a list of the required items to craft this blueprint.
         /// </summary>
-        /// <returns>Item list.</returns>
-        List<IItemBundle> GetIngredients();
+        List<Tuple<int, int>> Ingredients
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Check if all required ingredients are present.
         /// </summary>
         /// <param name="ingredients">Used ingredients.</param>
         /// <returns>Whethere all ingredients are present.</returns>
+        bool Match(List<Tuple<int, int>> ingredients);
         bool Match(List<IItemBundle> ingredients);
 
         /// <summary>
@@ -27,6 +31,7 @@ namespace GameLib.Inventory
         /// </summary>
         /// <param name="ingredients">Ingredients to craft with.</param>
         /// <returns>Crafted item or null if not possible.</returns>
-        IItemBundle Craft(List<IItemBundle> ingredients);
+        Tuple<int, int> Craft(List<Tuple<int, int>> ingredients);
+        Tuple<int, int> Craft(List<IItemBundle> ingredients);
     }
 }

@@ -40,5 +40,30 @@ namespace GameLib.Inventory {
             Rare = 2,
             Legendary = 3
         }
+
+        public override bool Equals(object other)
+        {
+            var result = true;
+            var item = (Item) other;
+            if (Price != item.Price) {
+                result = false;
+            }
+            if (MaxBundleSize != item.MaxBundleSize) {
+                result = false;
+            }
+            if (Weight != item.Weight) {
+                result = false;
+            }
+            if (Stackable != item.Stackable) {
+                result = false;
+            }
+            if (Rarity != item.Rarity) {
+                result = false;
+            }
+            if (Ownership != item.Ownership) {
+                result = false;
+            }
+            return result;
+        }
     }
 }
