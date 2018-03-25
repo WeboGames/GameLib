@@ -8,7 +8,10 @@ namespace GameLib.Inventory
     [Serializable]
     public class Blueprint : Serializable, IBlueprint
     {
-        public List<Tuple<int, int>> Ingredients { get; set; }
+        public List<Tuple<int, int>> Ingredients
+        {
+            get; set;
+        }
 
         public Tuple<int, int> Product
         {
@@ -55,20 +58,22 @@ namespace GameLib.Inventory
 
         public bool Match(List<IItemBundle> ingredients)
         {
-            var found = true;
+            var found = new Dictionary<int, bool>();
             foreach (var ingredient in Ingredients) {
-                var foundIngredient = ingredients.Where(s => s.Preset.Id == ingredient.Item1);
-                found = foundIngredient.Count() > 0 ? true : false;
-                if (!found) {
-                    break;
+                var amount = 0;
+                try {
+                    amount = ingredients.Where(s => s.Preset.Id == ingredient.Item1).Sum(s => s.Count);
                 }
-                var availableAmount = foundIngredient.Select(s => s.Count).Sum();
-                if (availableAmount < ingredient.Item2) {
-                    found = false;
-                    break;
+                catch {
+                    amount = 0;
                 }
+                found[ingredient.Item1] = amount >= ingredient.Item2;
             }
-            return found;
+            var allFound = true;
+            foreach (var singleFound in found) {
+                allFound &= singleFound.Value;
+            }
+            return allFound;
         }
 
         public Tuple<int, int> Craft(List<Tuple<int, int>> ingredients)
