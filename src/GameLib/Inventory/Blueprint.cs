@@ -39,10 +39,14 @@ namespace GameLib.Inventory
         {
             var found = true;
             foreach (var ingredient in Ingredients) {
-                var foundIngredient = ingredients.SingleOrDefault(s => s.Item2 >= ingredient.Item2 
-                                                            && s.Item1 == ingredient.Item1);
+                var foundIngredient = ingredients.Where(s => s.Item1 == ingredient.Item1).ToList();
                 found = foundIngredient != null ? true : false;
                 if (!found) {
+                    break;
+                }
+                var availableAmount = foundIngredient.AsEnumerable().Sum(s => s.Item2);
+                if (availableAmount < ingredient.Item2) {
+                    found = false;
                     break;
                 }
             }
@@ -53,10 +57,14 @@ namespace GameLib.Inventory
         {
             var found = true;
             foreach (var ingredient in Ingredients) {
-                var foundIngredient = ingredients.SingleOrDefault(s => s.Count >= ingredient.Item2 
-                                                            && s.Preset.Id == ingredient.Item1);
+                var foundIngredient = ingredients.Where(s => s.Preset.Id == ingredient.Item1);
                 found = foundIngredient != null ? true : false;
                 if (!found) {
+                    break;
+                }
+                var availableAmount = foundIngredient.AsEnumerable().Sum(s => s.Count);
+                if (availableAmount < ingredient.Item2) {
+                    found = false;
                     break;
                 }
             }
@@ -65,12 +73,12 @@ namespace GameLib.Inventory
 
         public Tuple<int, int> Craft(List<Tuple<int, int>> ingredients)
         {
-            return Match(ingredients) ? Product : null;
+            return Match(ingredients) ? Clone(Product) : null;
         }
 
         public Tuple<int, int> Craft(List<IItemBundle> ingredients)
         {
-            return Match(ingredients) ? Product : null;
+            return Match(ingredients) ? Clone(Product) : null;
         }
     }
 }
