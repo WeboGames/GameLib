@@ -79,6 +79,7 @@ namespace GameLib.Inventory {
         /// <returns>List of found bundles.</returns>
         List<IItemBundle> GetItemBundles(Item item);
 
+//TODO: bool RemoveItem(int id)
         /// <summary>
         /// Retrieves an Item from a bundle.
         /// </summary>

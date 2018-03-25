@@ -58,11 +58,11 @@ namespace GameLib.Inventory
             var found = true;
             foreach (var ingredient in Ingredients) {
                 var foundIngredient = ingredients.Where(s => s.Preset.Id == ingredient.Item1);
-                found = foundIngredient != null ? true : false;
+                found = foundIngredient.Count() > 0 ? true : false;
                 if (!found) {
                     break;
                 }
-                var availableAmount = foundIngredient.AsEnumerable().Sum(s => s.Count);
+                var availableAmount = foundIngredient.Select(s => s.Count).Sum();
                 if (availableAmount < ingredient.Item2) {
                     found = false;
                     break;
