@@ -62,7 +62,7 @@ namespace GameLib.Inventory
             foreach (var ingredient in Ingredients) {
                 var amount = 0;
                 try {
-                    amount = ingredients.Where(s => s.Preset.Id == ingredient.Item1).Sum(s => s.Count);
+                    amount = ingredients.Where(s => s.Preset != null && s.Preset.Id == ingredient.Item1).Sum(s => s.Count);
                 }
                 catch {
                     amount = 0;
