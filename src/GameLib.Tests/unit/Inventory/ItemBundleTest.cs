@@ -10,11 +10,11 @@ public class ItemBundleTest {
     [SetUp]
     public void SetUp()
     {
-        _item0 = new Item(0, "Beacon", 250, 8, Item.ItemRarity.Uncommon, 15,
+        _item0 = new Item(0, "Beacon", 250, 8, Item.ItemRarity.Uncommon,
             "Use to generate a beacon on the map.",
             Item.OwnershipType.Public, true);
         _item1 = new Item(1, "Non Stackable", 250, 2,
-            Item.ItemRarity.Uncommon, 5, "Use to generate a beacon on the map.",
+            Item.ItemRarity.Uncommon, "Use to generate a beacon on the map.",
             Item.OwnershipType.Public, false);
         _itemBundle = new ItemBundle(_item0);
     }

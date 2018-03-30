@@ -3,26 +3,32 @@ using System.Linq;
 
 namespace GameLib.Inventory {
     public class Inventory : IInventory {
-        public float WeightCapacity { get; set; }
-        public int BundleCapacity { get; set; }
-        public float Usage { get; set; }
+        public int Capacity { get; set; }
 
         public List<IItemBundle> ItemBundles;
 
-        public Inventory(float weightCapacity, int bundleCapacity)
+        public Inventory(int capacity)
         {
-            WeightCapacity = weightCapacity;
-            BundleCapacity = bundleCapacity;
-            Usage = 0;
-            ItemBundles = new List<IItemBundle>(bundleCapacity);
-            for (var i = 0; i < BundleCapacity; i++) {
+            Capacity = capacity;
+            ItemBundles = new List<IItemBundle>(capacity);
+            for (var i = 0; i < Capacity; i++) {
                 ItemBundles.Add(new ItemBundle());
             }
         }
 
+        public int GetUsage()
+        {
+            return ItemBundles.Count(x => x.Preset != null);
+        }
+
+        public bool CanAdd(Item item)
+        {
+            var bundle = HasAvailableBundle(item);
+            return bundle != null || GetUsage() < Capacity;
+        }
+
         public IItemBundle AddItem(Item item)
         {
-            if (!(Usage + item.Weight <= WeightCapacity)) return null;
             var bundle = HasAvailableBundle(item);
             if (bundle != null) {
                 bundle.AddItemToBundle(item);
@@ -34,13 +40,11 @@ namespace GameLib.Inventory {
                     }
                 }
             }
-            Usage += item.Weight;
             return bundle;
         }
 
         public IItemBundle AddItem(int bundlePosition, Item item, int count)
         {
-            if (Usage + item.Weight > WeightCapacity) return null;
             var bundle = ItemBundles[bundlePosition];
             var wasAdded = true;
             while (wasAdded && count != 0) {
@@ -55,11 +59,6 @@ namespace GameLib.Inventory {
             return ItemBundles[bundlePosition].AddBundleToBundle(itemBundle);
         }
 
-        public int GetBundleNumber()
-        {
-            return ItemBundles.Count(x => x.Preset != null);
-        }
-
         public IItemBundle GetItemBundle(int bundlePosition)
         {
             return ItemBundles[bundlePosition];
@@ -70,7 +69,6 @@ namespace GameLib.Inventory {
             foreach (var itemBundle in ItemBundles) {
                 if (itemBundle.Preset == null || itemBundle.Preset.Id != item.Id) continue;
                 var item1 = itemBundle.RemoveItemFromBundle();
-                Usage -= item1.Weight;
                 return item1;
             }
             return null;
@@ -78,7 +76,7 @@ namespace GameLib.Inventory {
 
         public IItemBundle GetItemBundle(Item item)
         {
-            return ItemBundles.FirstOrDefault(itemBundle => itemBundle.Preset.Id == item.Id);
+            return ItemBundles.FirstOrDefault(itemBundle => itemBundle.Preset != null && itemBundle.Preset.Id == item.Id);
         }
 
         public List<IItemBundle> GetItemBundles(Item item)
@@ -91,7 +89,6 @@ namespace GameLib.Inventory {
             foreach (var itemBundle in ItemBundles) {
                 if (itemBundle != targetBundle) continue;
                 var item = itemBundle.RemoveItemFromBundle();
-                Usage -= item.Weight;
                 return item;
             }
             return null;

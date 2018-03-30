@@ -6,20 +6,23 @@ namespace GameLib.Inventory {
     /// adding items, grouping into bundles, removing items, etc.
     /// </summary>
     public interface IInventory {
-        /// <summary>
-        /// Maximum total weight allowed in inventory.
-        /// </summary>
-        float WeightCapacity { get; set; }
 
         /// <summary>
         /// Maximum number of bundles allowed in inventory.
         /// </summary>
-        int BundleCapacity { get; set; }
+        int Capacity { get; set; }
 
         /// <summary>
         /// Actual weight of all items in inventory.
         /// </summary>
-        float Usage { get; set; }
+        int GetUsage();
+
+        /// <summary>
+        /// Checks whether an item can be added.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <returns>Whether it could be added.</returns>
+        bool CanAdd(Item item);
 
         /// <summary>
         /// Add item to inventory
@@ -44,12 +47,6 @@ namespace GameLib.Inventory {
         /// <param name="bundlePosition">Position of the bundle to add to</param>
         /// <returns>Number of items added</returns>
         int AddBundleToBundle(IItemBundle itemBundle, int bundlePosition);
-
-        /// <summary>
-        /// Get number of bundles in inventory
-        /// </summary>
-        /// <returns>Number of bundles in inventory</returns>
-        int GetBundleNumber();
 
         /// <summary>
         /// Get a bundle based on a passed index

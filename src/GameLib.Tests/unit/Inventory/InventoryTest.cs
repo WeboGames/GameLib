@@ -11,15 +11,15 @@ public class InventoryTest {
     [SetUp]
     public void SetUp()
     {
-        _inventory = new Inventory(20f, 2);
-        _item0 = new Item(0, "Iron Ore", 100, 8, Item.ItemRarity.Common, 5,
+        _inventory = new Inventory(20);
+        _item0 = new Item(0, "Iron Ore", 100, 8, Item.ItemRarity.Common,
             "Basic crafting material. Available in asteroids.",
             Item.OwnershipType.Public, true);
-        _item1 = new Item(1, "Beacon", 250, 2, Item.ItemRarity.Uncommon, 15,
+        _item1 = new Item(1, "Beacon", 250, 2, Item.ItemRarity.Uncommon,
             "Use to generate a beacon on the map.",
             Item.OwnershipType.Public, true);
         _item2 = new Item(2, "Non Stackable", 250, 2,
-            Item.ItemRarity.Uncommon, 5, "Use to generate a beacon on the map.",
+            Item.ItemRarity.Uncommon, "Use to generate a beacon on the map.",
             Item.OwnershipType.Public, false);
     }
 
@@ -28,46 +28,48 @@ public class InventoryTest {
     {
         var ironOre = Serializable.Clone(_item0);
         _inventory.AddItem(ironOre);
-        Assert.AreEqual(ironOre.Weight, _inventory.Usage);
-        Assert.AreEqual(1, _inventory.GetBundleNumber());
+        Assert.AreEqual(1, _inventory.GetUsage());
     }
 
     [Test]
     public void T01_AddItemToSecondBundleSuccessful()
     {
-        _inventory.WeightCapacity = 200f;
         var ironOre = Serializable.Clone(_item0);
         _inventory.AddItem(ironOre);
         for (var i = 0; i < ironOre.MaxBundleSize; i++) {
             _inventory.AddItem(Serializable.Clone(_item0));
         }
-        Assert.AreEqual(2, _inventory.GetBundleNumber());
+        Assert.AreEqual(2, _inventory.GetUsage());
     }
 
     [Test]
     public void T02_AddItemToThirdBundleFailure()
     {
-        _inventory.WeightCapacity = 200f;
+        _inventory = new Inventory(2);
         var ironOre = Serializable.Clone(_item0);
         _inventory.AddItem(ironOre);
         for (var i = 0; i < ironOre.MaxBundleSize; i++) {
             _inventory.AddItem(Serializable.Clone(_item0));
         }
         _inventory.AddItem(Serializable.Clone(_item1));
-        Assert.AreEqual(2, _inventory.GetBundleNumber());
+        Assert.AreEqual(2, _inventory.GetUsage());
     }
 
     [Test]
     public void T03_AddItemToFullFailure()
     {
+        _inventory = new Inventory(3);
         var ironOre = Serializable.Clone(_item0);
         _inventory.AddItem(ironOre);
-        for (var i = 0; i < 3; i++) {
-            _inventory.AddItem(Serializable.Clone(_item0));
+        for (var i = 0; i < ironOre.MaxBundleSize; i++) {
+            _inventory.AddItem(Serializable.Clone(ironOre));
         }
-        _inventory.AddItem(Serializable.Clone(_item0));
-        Assert.AreEqual(20f, _inventory.Usage);
-        Assert.AreEqual(4, _inventory.GetItemBundle(ironOre).Count);
+        _inventory.AddItem(Serializable.Clone(ironOre));
+        Assert.AreEqual(8, _inventory.GetItemBundle(ironOre).Count);
+        for (var i = 0; i < ironOre.MaxBundleSize; i++) {
+            _inventory.AddItem(Serializable.Clone(ironOre));
+        }
+        Assert.AreEqual(3, _inventory.GetUsage());
     }
 
     [Test]
@@ -77,7 +79,7 @@ public class InventoryTest {
         _inventory.AddItem(Serializable.Clone(_item0));
         _inventory.RemoveItem(Serializable.Clone(_item0));
         _inventory.RemoveItem(Serializable.Clone(_item0));
-        Assert.AreEqual(0, _inventory.Usage);
+        Assert.AreEqual(0, _inventory.GetUsage());
     }
 
     [Test]
@@ -109,7 +111,7 @@ public class InventoryTest {
         var item1 = Serializable.Clone(_item2);
         _inventory.AddItem(item);
         _inventory.AddItem(item1);
-        Assert.AreEqual(2, _inventory.GetBundleNumber());
+        Assert.AreEqual(2, _inventory.GetUsage());
     }
 
     [Test]
@@ -136,21 +138,29 @@ public class InventoryTest {
     [Test]
     public void T10_GetAllMatchingBundles()
     {
-        _inventory = new Inventory(500f, 10);
         for (var i = 0; i < _item0.MaxBundleSize + 2; i++) {
             _inventory.AddItem(Serializable.Clone(_item0));
         }
-        Assert.AreEqual(_item0.Weight * (_item0.MaxBundleSize + 2), _inventory.Usage);
-        var oldUsage = _inventory.Usage;
-        Assert.AreEqual(2, _inventory.GetBundleNumber());
+        var oldUsage = _inventory.GetUsage();
+        Assert.AreEqual(2, _inventory.GetUsage());
         var foundLists = _inventory.GetItemBundles(_item0);
         Assert.AreEqual(2, foundLists.Count);
         for (var i = 0; i < _item1.MaxBundleSize * 2 + 1; i++) {
             _inventory.AddItem(Serializable.Clone(_item1));
         }
         var foundLists1 = _inventory.GetItemBundles(_item1);
-        Assert.AreEqual(oldUsage + _item1.Weight * (_item1.MaxBundleSize * 2 + 1), _inventory.Usage);
-        Assert.AreEqual(5, _inventory.GetBundleNumber());
+        Assert.AreEqual(5, _inventory.GetUsage());
         Assert.AreEqual(3, foundLists1.Count);
+    }
+
+    [Test]
+    public void T11_CanBeAdded()
+    {
+        _inventory = new Inventory(3);
+        Assert.IsTrue(_inventory.CanAdd(_item0));
+        _inventory.AddItem(0, _item0, _item0.MaxBundleSize);
+        _inventory.AddItem(1, _item1, _item1.MaxBundleSize);
+        _inventory.AddItem(2, _item2, _item2.MaxBundleSize);
+        Assert.IsFalse(_inventory.CanAdd(_item0));
     }
 }

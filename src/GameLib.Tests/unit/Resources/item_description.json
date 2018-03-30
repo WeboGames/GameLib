@@ -5,7 +5,6 @@
     "Description" : "description_00",
     "Price" : 100,
     "MaxBundleSize" : 10,
-    "Weight" : 10.0,
     "Stackable" : true,
     "Rarity" : 0,
     "Ownership" : 0
@@ -16,7 +15,6 @@
     "Description" : "description_01",
     "Price" : 100,
     "MaxBundleSize" : 10,
-    "Weight" : 10.0,
     "Stackable" : true,
     "Rarity" : 0,
     "Ownership" : 0
@@ -27,7 +25,6 @@
     "Description" : "description_02",
     "Price" : 100,
     "MaxBundleSize" : 10,
-    "Weight" : 10.0,
     "Stackable" : true,
     "Rarity" : 0,
     "Ownership" : 0

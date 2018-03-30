@@ -13,9 +13,9 @@ namespace GameLib.test.unit.Resources {
 
         // Base constructor copy
         public ItemExtended(int id, string name, int price, int maxBundleSize, ItemRarity rarity,
-            float weight, string description, OwnershipType ownership, bool stackable,
+            string description, OwnershipType ownership, bool stackable,
             int slot) : base(id,
-            name, price, maxBundleSize, rarity, weight, description, ownership, stackable)
+            name, price, maxBundleSize, rarity, description, ownership, stackable)
         {
             Slot = slot;
         }
