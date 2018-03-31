@@ -17,16 +17,16 @@ namespace GameLib.Tests.unit.Inventory
             var ingredients = new List<IItemBundle>();
             var item00 = new Item(0, "Iron Ore", 100, 8, Item.ItemRarity.Common,
                                   "Basic crafting material. Available in asteroids.",
-                                  Item.OwnershipType.Public, true);
+                                  Item.OwnershipType.Public);
             var item01 = new Item(1, "Beacon", 250, 2, Item.ItemRarity.Uncommon,
                                   "Use to generate a beacon on the map.",
-                                  Item.OwnershipType.Public, true);
+                                  Item.OwnershipType.Public);
             var item02 = new Item(2, "Non Stackable", 250, 2,
                                   Item.ItemRarity.Uncommon, "",
-                                  Item.OwnershipType.Public, false);
+                                  Item.OwnershipType.Public);
             var item03 = new Item(3, "Non Stackable", 250, 2,
                                   Item.ItemRarity.Uncommon, "",
-                                  Item.OwnershipType.Public, false);
+                                  Item.OwnershipType.Public);
             _itemBundle00 = new ItemBundle(item00);
             _itemBundle01 = new ItemBundle(item01);
             _itemBundle02 = new ItemBundle(item02);

@@ -14,13 +14,13 @@ public class InventoryTest {
         _inventory = new Inventory(20);
         _item0 = new Item(0, "Iron Ore", 100, 8, Item.ItemRarity.Common,
             "Basic crafting material. Available in asteroids.",
-            Item.OwnershipType.Public, true);
+            Item.OwnershipType.Public);
         _item1 = new Item(1, "Beacon", 250, 2, Item.ItemRarity.Uncommon,
             "Use to generate a beacon on the map.",
-            Item.OwnershipType.Public, true);
-        _item2 = new Item(2, "Non Stackable", 250, 2,
+            Item.OwnershipType.Public);
+        _item2 = new Item(2, "Non Stackable", 250, 1,
             Item.ItemRarity.Uncommon, "Use to generate a beacon on the map.",
-            Item.OwnershipType.Public, false);
+            Item.OwnershipType.Public);
     }
 
     [Test]
@@ -51,8 +51,9 @@ public class InventoryTest {
         for (var i = 0; i < ironOre.MaxBundleSize; i++) {
             _inventory.AddItem(Serializable.Clone(_item0));
         }
-        _inventory.AddItem(Serializable.Clone(_item1));
+        var nullBundle = _inventory.AddItem(Serializable.Clone(_item1));
         Assert.AreEqual(2, _inventory.GetUsage());
+        Assert.IsNull(nullBundle);
     }
 
     [Test]

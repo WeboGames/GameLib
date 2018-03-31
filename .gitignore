@@ -10,3 +10,4 @@ tools/*
 # ide
 .idea
 src/.vs/
+.vs/

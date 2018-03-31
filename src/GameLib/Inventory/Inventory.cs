@@ -1,9 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace GameLib.Inventory {
-    public class Inventory : IInventory {
-        public int Capacity { get; set; }
+namespace GameLib.Inventory
+{
+    public class Inventory : IInventory
+    {
+        public int Capacity
+        {
+            get; set;
+        }
 
         public List<IItemBundle> ItemBundles;
 
@@ -32,13 +37,6 @@ namespace GameLib.Inventory {
             var bundle = HasAvailableBundle(item);
             if (bundle != null) {
                 bundle.AddItemToBundle(item);
-            } else {
-                if (!item.Stackable) {
-                    bundle = ItemBundles.FirstOrDefault(t => t.Preset == null);
-                    if (bundle != null) {
-                        bundle.AddItemToBundle(item);
-                    }
-                }
             }
             return bundle;
         }
@@ -66,17 +64,19 @@ namespace GameLib.Inventory {
 
         public Item RemoveItem(Item item)
         {
-            foreach (var itemBundle in ItemBundles) {
-                if (itemBundle.Preset == null || itemBundle.Preset.Id != item.Id) continue;
-                var item1 = itemBundle.RemoveItemFromBundle();
-                return item1;
+            var bundleToRemoveFrom = ItemBundles.FirstOrDefault(t => t.Preset != null
+                && t.Preset.Id == item.Id);
+            Item removedItem = null;
+            if (bundleToRemoveFrom != null) {
+                removedItem = bundleToRemoveFrom.RemoveItemFromBundle();
             }
-            return null;
+            return removedItem;
         }
 
         public IItemBundle GetItemBundle(Item item)
         {
-            return ItemBundles.FirstOrDefault(itemBundle => itemBundle.Preset != null && itemBundle.Preset.Id == item.Id);
+            return ItemBundles.FirstOrDefault(itemBundle => itemBundle.Preset != null
+                && itemBundle.Preset.Id == item.Id);
         }
 
         public List<IItemBundle> GetItemBundles(Item item)
@@ -86,19 +86,20 @@ namespace GameLib.Inventory {
 
         public Item RemoveItem(IItemBundle targetBundle)
         {
-            foreach (var itemBundle in ItemBundles) {
-                if (itemBundle != targetBundle) continue;
-                var item = itemBundle.RemoveItemFromBundle();
-                return item;
+            var toRemoveFrom = ItemBundles.FirstOrDefault(t => t == targetBundle);
+            Item removed = null;
+            if (toRemoveFrom != null) {
+                removed = toRemoveFrom.RemoveItemFromBundle();
             }
-            return null;
+            return removed;
         }
 
         public int GetBundlePosition(IItemBundle targetBundle)
         {
             var result = -1;
             for (var i = 0; i < ItemBundles.Count; i++) {
-                if (ItemBundles[i] != targetBundle) continue;
+                if (ItemBundles[i] != targetBundle)
+                    continue;
                 result = i;
             }
             return result;
@@ -115,10 +116,8 @@ namespace GameLib.Inventory {
 
         private IItemBundle HasAvailableBundle(Item item)
         {
-            return item.Stackable
-                ? ItemBundles.FirstOrDefault(t => (t.Preset != null && t.Preset.Id == item.Id && t.CanBeAddedToBundle(item)) ||
-                                                  t.Preset == null)
-                : null;
+            return ItemBundles.FirstOrDefault(t => (t.Preset != null && t.Preset.Id == item.Id
+                                              && t.CanBeAddedToBundle(item)) || t.Preset == null);
         }
     }
 }

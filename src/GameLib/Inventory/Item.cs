@@ -6,7 +6,6 @@ namespace GameLib.Inventory {
     public class Item : Serializable {
         public int Price;
         public int MaxBundleSize;
-        public bool Stackable;
         public ItemRarity Rarity;
         public OwnershipType Ownership;
 
@@ -14,7 +13,7 @@ namespace GameLib.Inventory {
 
         public Item(int id, string name, int price, int maxBundleSize,
             ItemRarity rarity, string description,
-            OwnershipType ownership, bool stackable)
+            OwnershipType ownership)
         {
             Id = id;
             Name = name;
@@ -23,7 +22,6 @@ namespace GameLib.Inventory {
             Rarity = rarity;
             Description = description;
             Ownership = ownership;
-            Stackable = stackable;
         }
 
         public enum OwnershipType {
@@ -47,9 +45,6 @@ namespace GameLib.Inventory {
                 result = false;
             }
             if (MaxBundleSize != item.MaxBundleSize) {
-                result = false;
-            }
-            if (Stackable != item.Stackable) {
                 result = false;
             }
             if (Rarity != item.Rarity) {

@@ -4,7 +4,6 @@
     "Description": "description_00",
     "Price": 100,
     "MaxBundleSize": 10,
-    "Stackable": true,
     "Rarity": 0,
     "Ownership": 0,
     "Slot": 3,
