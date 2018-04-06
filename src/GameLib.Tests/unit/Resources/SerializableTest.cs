@@ -1,13 +1,14 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using GameLib.Inventory;
 using GameLib.Resources;
 using GameLib.test.unit.Resources;
 using NUnit.Framework;
 
-namespace GameLib.Tests.unit.Resources {
+namespace GameLib.Tests.unit.Resources
+{
     [TestFixture]
-    public class SerializableTest {
+    public class SerializableTest
+    {
         [Test]
         public void BaseItemDeserializationTest()
         {

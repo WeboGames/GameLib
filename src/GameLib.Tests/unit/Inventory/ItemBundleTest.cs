@@ -2,7 +2,8 @@
 using GameLib.Resources;
 using NUnit.Framework;
 
-public class ItemBundleTest {
+public class ItemBundleTest
+{
     private ItemBundle _itemBundle;
     private Item _item0;
     private Item _item1;
@@ -20,14 +21,14 @@ public class ItemBundleTest {
     }
 
     [Test]
-    public void T00_AddItemSuccess()
+    public void ItemBundle_T00_AddItemSuccess()
     {
         _itemBundle.AddItemToBundle(Serializable.Clone(_item0));
         Assert.AreEqual(1, _itemBundle.Count);
     }
 
     [Test]
-    public void T01_AddTooManyItemsFailure()
+    public void ItemBundle_T01_AddTooManyItemsFailure()
     {
         for (var i = 0; i < _itemBundle.MaxBundleSize; i++) {
             _itemBundle.AddItemToBundle(Serializable.Clone(_item0));
@@ -37,7 +38,7 @@ public class ItemBundleTest {
     }
 
     [Test]
-    public void T02_RemoveItemSuccess()
+    public void ItemBundle_T02_RemoveItemSuccess()
     {
         _itemBundle.AddItemToBundle(Serializable.Clone(_item0));
         var item = _itemBundle.RemoveItemFromBundle();
@@ -46,7 +47,7 @@ public class ItemBundleTest {
     }
 
     [Test]
-    public void T03_RemoveItemFromEmptyFailure()
+    public void ItemBundle_T03_RemoveItemFromEmptyFailure()
     {
         var item = _itemBundle.RemoveItemFromBundle();
         Assert.IsNull(item);
@@ -54,7 +55,7 @@ public class ItemBundleTest {
     }
 
     [Test]
-    public void T04_AddBundleToBundleSuccess()
+    public void ItemBundle_T04_AddBundleToBundleSuccess()
     {
         for (var i = 0; i < 4; i++) {
             _itemBundle.AddItemToBundle(Serializable.Clone(_item0));
@@ -70,7 +71,7 @@ public class ItemBundleTest {
     }
 
     [Test]
-    public void T05_AddBundleToBundleFailure()
+    public void ItemBundle_T05_AddBundleToBundleFailure()
     {
         for (var i = 0; i < _itemBundle.MaxBundleSize; i++) {
             _itemBundle.AddItemToBundle(Serializable.Clone(_item0));
@@ -86,14 +87,14 @@ public class ItemBundleTest {
     }
 
     [Test]
-    public void T06_AddNonMatchingItemFailure()
+    public void ItemBundle_T06_AddNonMatchingItemFailure()
     {
         _itemBundle.AddItemToBundle(Serializable.Clone(_item1));
         Assert.AreEqual(0, _itemBundle.Count);
     }
 
     [Test]
-    public void T07_AddUnmatchingBundleToBundleFailure()
+    public void ItemBundle_T07_AddUnmatchingBundleToBundleFailure()
     {
         var mismatchingBundle = new ItemBundle(Serializable.Clone(_item1));
         for (var i = 0; i < mismatchingBundle.MaxBundleSize; i++) {
@@ -104,7 +105,7 @@ public class ItemBundleTest {
     }
 
     [Test]
-    public void T08_AddBigBundleToBundleSuccess()
+    public void ItemBundle_T08_AddBigBundleToBundleSuccess()
     {
         for (var i = 0; i < 4; i++) {
             _itemBundle.AddItemToBundle(Serializable.Clone(_item0));

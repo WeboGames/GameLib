@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
 using GameLib.Inventory;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace GameLib.Tests.unit.Inventory
 {
-    class BlueprintTest
+    internal class BlueprintTest
     {
         private IBlueprint _blueprint;
         private IItemBundle _itemBundle00;
@@ -50,7 +50,7 @@ namespace GameLib.Tests.unit.Inventory
         }
 
         [Test]
-        public void T00_MatchIngredientList()
+        public void Blueprint_T00_MatchIngredientList()
         {
             var ingredients = new List<IItemBundle>();
             ingredients.Add(_itemBundle00);
@@ -61,7 +61,7 @@ namespace GameLib.Tests.unit.Inventory
         }
 
         [Test]
-        public void T01_CraftItem()
+        public void Blueprint_T01_CraftItem()
         {
             var ingredients = new List<IItemBundle>();
             ingredients.Add(_itemBundle00);

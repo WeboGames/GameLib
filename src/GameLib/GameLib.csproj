@@ -53,6 +53,8 @@
     <Compile Include="Inventory\Inventory.cs" />
     <Compile Include="Inventory\Item.cs" />
     <Compile Include="Inventory\ItemBundle.cs" />
+    <Compile Include="Inventory\IWallet.cs" />
+    <Compile Include="Inventory\Wallet.cs" />
     <Compile Include="Persistence\IPersistence.cs" />
     <Compile Include="Persistence\ISaveFile.cs" />
     <Compile Include="Persistence\Persistence.cs" />

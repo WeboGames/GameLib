@@ -2,7 +2,8 @@
 using GameLib.Resources;
 using NUnit.Framework;
 
-public class InventoryTest {
+public class InventoryTest
+{
     private Inventory _inventory;
     private Item _item0;
     private Item _item1;
@@ -24,7 +25,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T00_AddItemSuccessful()
+    public void Inventory_T00_AddItemSuccessful()
     {
         var ironOre = Serializable.Clone(_item0);
         _inventory.AddItem(ironOre);
@@ -32,7 +33,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T01_AddItemToSecondBundleSuccessful()
+    public void Inventory_T01_AddItemToSecondBundleSuccessful()
     {
         var ironOre = Serializable.Clone(_item0);
         _inventory.AddItem(ironOre);
@@ -43,7 +44,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T02_AddItemToThirdBundleFailure()
+    public void Inventory_T02_AddItemToThirdBundleFailure()
     {
         _inventory = new Inventory(2);
         var ironOre = Serializable.Clone(_item0);
@@ -57,7 +58,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T03_AddItemToFullFailure()
+    public void Inventory_T03_AddItemToFullFailure()
     {
         _inventory = new Inventory(3);
         var ironOre = Serializable.Clone(_item0);
@@ -74,7 +75,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T04_EmptyInventory()
+    public void Inventory_T04_EmptyInventory()
     {
         _inventory.AddItem(Serializable.Clone(_item0));
         _inventory.AddItem(Serializable.Clone(_item0));
@@ -84,7 +85,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T05_BundleCreated()
+    public void Inventory_T05_BundleCreated()
     {
         var ironOre = Serializable.Clone(_item0);
         var beacon = Serializable.Clone(_item1);
@@ -95,7 +96,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T06_GetItemFromBundle()
+    public void Inventory_T06_GetItemFromBundle()
     {
         var ironOre = Serializable.Clone(_item0);
         var beacon = Serializable.Clone(_item1);
@@ -106,7 +107,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T07_AddNonStackableItems()
+    public void Inventory_T07_AddNonStackableItems()
     {
         var item = Serializable.Clone(_item2);
         var item1 = Serializable.Clone(_item2);
@@ -116,7 +117,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T08_GetCorrectBundlePosition()
+    public void Inventory_T08_GetCorrectBundlePosition()
     {
         var item = Serializable.Clone(_item0);
         var item1 = Serializable.Clone(_item1);
@@ -127,7 +128,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T09_NoItemFound()
+    public void Inventory_T09_NoItemFound()
     {
         var item = Serializable.Clone(_item0);
         var item1 = Serializable.Clone(_item1);
@@ -137,7 +138,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T10_GetAllMatchingBundles()
+    public void Inventory_T10_GetAllMatchingBundles()
     {
         for (var i = 0; i < _item0.MaxBundleSize + 2; i++) {
             _inventory.AddItem(Serializable.Clone(_item0));
@@ -155,7 +156,7 @@ public class InventoryTest {
     }
 
     [Test]
-    public void T11_CanBeAdded()
+    public void Inventory_T11_CanBeAdded()
     {
         _inventory = new Inventory(3);
         Assert.IsTrue(_inventory.CanAdd(_item0));
