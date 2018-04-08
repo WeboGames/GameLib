@@ -1,0 +1,25 @@
+﻿{
+    0 : {
+        "Id" : 0,
+        "Name" : "name_00",
+        "Description" : "description_00",
+        "Price" : 100,
+        "MaxBundleSize" : 10,
+        "Stackable" : true,
+        "Rarity" : 0,
+        "Ownership" : 0,
+        "Slot" : 3,
+        "SecretString" : "NONE"
+    },
+    1 : {
+        "Id" : 1,
+        "Name" : "name_01",
+        "Description" : "description_01",
+        "Price" : 100,
+        "MaxBundleSize" : 10,
+        "Stackable" : true,
+        "Rarity" : 0,
+        "Ownership" : 0,
+        "Slot" : 5
+    }
+}

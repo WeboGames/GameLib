@@ -67,6 +67,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="unit\Resources\blueprint_description.json" />
+    <Content Include="unit\Resources\item_description_map.json" />
+    <Content Include="unit\Resources\extended_item_description_map.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameLib\GameLib.csproj">

@@ -72,5 +72,31 @@ namespace GameLib.Tests.unit.Resources
             Assert.AreEqual(3, blueprintList[0].Ingredients[1].Item2);
             Assert.AreEqual(2, blueprintList[0].Product.Item1);
         }
+
+        [Test]
+        public void BaseItemMapDeserializationTest()
+        {
+            var jsonText =
+                File.ReadAllText("./src/GameLib.Tests/unit/Resources/item_description_map.json");
+            var descriptionList =
+                Serializable.LoadDescriptionMap<Item>(jsonText);
+            Assert.That(3, Is.EqualTo(descriptionList.Count));
+            Assert.That(1, Is.EqualTo(descriptionList[1].Id));
+            Assert.That("description_02", Is.EqualTo(descriptionList[2].Description));
+        }
+
+        [Test]
+        public void ExtendedItemMapDeserializationTest()
+        {
+            var jsonText =
+                File.ReadAllText(
+                    "./src/GameLib.Tests/unit/Resources/extended_item_description_map.json");
+            var descriptionList =
+                Serializable.LoadDescriptionMap<ItemExtended>(jsonText);
+            Assert.That(2, Is.EqualTo(descriptionList.Count));
+            Assert.That(5, Is.EqualTo(descriptionList[1].Slot));
+            Assert.IsNull(descriptionList[0].SecretString);
+        }
+
     }
 }

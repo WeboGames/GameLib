@@ -17,7 +17,7 @@ var buildDir = Directory("./src/GameLib/bin") + Directory(configuration);
 //////////////////////////////////////////////////////////////////////
 
 Task("Clean")
-    .Does(() => 
+    .Does(() =>
 {
     CleanDirectory(buildDir);
 });
@@ -105,7 +105,7 @@ Task("Package")
         CreateDirectory(packageDir);
         NuGetPack("./nuget/GameLib.nuspec", new NuGetPackSettings()
         {
-            Version = "0.1.2",
+            Version = "0.1.3",
             BasePath = dir,
             OutputDirectory = packageDir
         });

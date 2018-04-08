@@ -52,6 +52,18 @@ namespace GameLib.Resources {
         }
 
         /// <summary>
+        /// Loads descriptions from resources as long as they can be serialized.
+        /// </summary>
+        /// <param name="jsonString">Json String to parse.</param>
+        /// <returns>Dictionary with descriptions.</returns>
+        public static Dictionary<uint, T> LoadDescriptionMap<T>(string jsonString) where T : new()
+        {
+            return jsonString.Length == 0
+                ? new Dictionary<uint, T>()
+                : JsonConvert.DeserializeObject<Dictionary<uint, T>>(jsonString);
+        }
+
+        /// <summary>
         /// Loads a single object description from resources.
         /// </summary>
         /// <param name="jsonString">Json String to parse.</param>
