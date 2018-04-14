@@ -48,4 +48,24 @@ internal class WalletTest
         _wallet.Buy(_itemBundle0);
         Assert.IsFalse(_wallet.CanBuy(_itemBundle0));
     }
+
+    [Test]
+    public void Wallet_T04_AddFunds()
+    {
+        Assert.AreEqual(300, _wallet.AddFunds(100));
+    }
+
+    [Test]
+    public void Wallet_T05_WithdrawFunds()
+    {
+        Assert.AreEqual(0, _wallet.WithdrawFunds(200));
+    }
+
+    [Test]
+    public void Wallet_T06_CanWithdrawFunds()
+    {
+        Assert.IsTrue(_wallet.CanWithdrawFunds(100));
+        Assert.IsTrue(_wallet.CanWithdrawFunds(200));
+        Assert.IsFalse(_wallet.CanWithdrawFunds(300));
+    }
 }

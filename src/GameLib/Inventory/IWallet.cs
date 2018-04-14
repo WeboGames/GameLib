@@ -49,5 +49,26 @@
         /// <param name="itemBundle">Item bundle to sell.</param>
         /// <returns>New balance.</returns>
         int Sell(IItemBundle itemBundle);
+
+        /// <summary>
+        /// Adds funds to wallet.
+        /// </summary>
+        /// <param name="amount">Amount to add.</param>
+        /// <returns>Balance after transaction.</returns>
+        int AddFunds(int amount);
+
+        /// <summary>
+        /// Withdraw funds from wallet.
+        /// </summary>
+        /// <param name="amount">Amount to withdraw.</param>
+        /// <returns>Balance after transaction.</returns>
+        int WithdrawFunds(int amount);
+
+        /// <summary>
+        /// Checks if balance allows.
+        /// </summary>
+        /// <param name="amount">Amount to check.</param>
+        /// <returns>Whether possible to withdraw.</returns>
+        bool CanWithdrawFunds(int amount);
     }
 }

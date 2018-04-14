@@ -51,5 +51,20 @@
             _balance += itemBundle.Count * itemBundle.Preset.Price;
             return _balance;
         }
+
+        public int AddFunds(int amount)
+        {
+            return _balance += amount;
+        }
+
+        public int WithdrawFunds(int amount)
+        {
+            return _balance -= amount;
+        }
+
+        public bool CanWithdrawFunds(int amount)
+        {
+            return _balance >= amount;
+        }
     }
 }
